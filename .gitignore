@@ -39,3 +39,7 @@ captures/
 # Keystore files
 *.jks
 .idea/
+
+# Local APK inspection and device verification artifacts
+analysis/
+app/release/

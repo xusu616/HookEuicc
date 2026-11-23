@@ -37,6 +37,11 @@ public class HookEuicc extends XposedModule {
         final String packageName = param.getPackageName();
         final ClassLoader classLoader = param.getDefaultClassLoader();
 
+        // 单独注册，避免系统 API 的版本差异中断 giffgaff 的原生桥接 Hook。
+        if (GiffgaffEsimHooks.PACKAGE_NAME.equals(packageName)) {
+            new GiffgaffEsimHooks(this, this::shareCode).install(classLoader);
+        }
+
         try {
             HookInit(classLoader);
             // OMAPI bypass
@@ -213,8 +218,8 @@ public class HookEuicc extends XposedModule {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, activationCode);
-            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shareIntent = Intent.createChooser(shareIntent, TITLE);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             try {
                 context.startActivity(shareIntent);
