@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -10,8 +11,8 @@ android {
         applicationId "cn.unicorn369.HookEuicc"
         minSdk 28
         targetSdk 35
-        versionCode 101
-        versionName "1.0.1"
+        versionCode 102
+        versionName "1.0.2"
     }
 
     buildTypes {
@@ -24,9 +25,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 }
 
 dependencies {
-    compileOnly 'io.github.libxposed:api:102.0.0-SNAPSHOT'
+    compileOnly 'io.github.libxposed:api:102.0.0'
     //implementation 'io.github.libxposed:service:102.0.0-SNAPSHOT'
 }
